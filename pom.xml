@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.himalaya</groupId>
+	<artifactId>himalayaWechat</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>Wechat Application Demo</name>
+	
+	<url>http://maven.apache.org</url> 
+  
+	<modules>
+		<module>csms</module>
+		<module>csmsweb</module>
+	</modules>
+
+	<properties>
+		<spring.boot.version>1.4.5.RELEASE</spring.boot.version>
+		<mybatis.spring.boot.starter>1.2.1</mybatis.spring.boot.starter>
+		<druid.spring.boot.starter>1.1.0</druid.spring.boot.starter>
+		<redis.spring.boot.starter>1.4.5.RELEASE</redis.spring.boot.starter>		
+		
+		<mybatis.version>3.4.4</mybatis.version>
+		<mybatis.spring.version>1.3.1</mybatis.spring.version>
+		<druid.version>1.0.31</druid.version>			
+		<oracle.version>11.2.0.3</oracle.version>
+		<mysql.connector.version>5.1.40</mysql.connector.version>
+
+		<spring.data.releasetrain.version>Hopper-SR8</spring.data.releasetrain.version>
+		<ognl.version>3.1.6</ognl.version>
+		<javassist.version>3.12.1.GA</javassist.version>	
+		<lombok.version>1.16.18</lombok.version>	
+		
+		<jackson.databind.version>2.6.7</jackson.databind.version>
+	</properties>
+	
+	<repositories>
+		<repository>
+			<id>local-file</id>
+			<url>file://${basedir}/lib/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.mybatis.spring.boot</groupId>
+			    <artifactId>mybatis-spring-boot-starter</artifactId>
+			    <version>${mybatis.spring.boot.starter}</version>
+			    <scope>import</scope>
+			</dependency>
+			
+			<dependency>  
+				<groupId>com.alibaba</groupId>  
+				<artifactId>druid-spring-boot-starter</artifactId>  
+				<version>${druid.spring.boot.starter}</version> 
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-data-redis</artifactId>
+			    <version>${redis.spring.boot.starter}</version>
+			    <scope>import</scope>
+			</dependency>			
+			
+			<!-- oracle jdbc driver -->
+			<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc6 -->
+			<dependency>
+			    <groupId>com.oracle</groupId>
+			    <artifactId>ojdbc6</artifactId>
+				<version>${oracle.version}</version>
+			</dependency>
+			
+			<dependency>
+	            <groupId>mysql</groupId>
+	            <artifactId>mysql-connector-java</artifactId>
+	            <version>${mysql.connector.version}</version>
+	        </dependency>
+
+			<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+			<dependency>
+			    <groupId>org.mybatis</groupId>
+			    <artifactId>mybatis-spring</artifactId>
+			    <version>${mybatis.spring.version}</version>
+			</dependency>			
+			
+			<!-- https://mvnrepository.com/artifact/javassist/javassist -->
+			<dependency>
+			    <groupId>javassist</groupId>
+			    <artifactId>javassist</artifactId>
+			    <version>${javassist.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.projectlombok</groupId>
+			    <artifactId>lombok</artifactId>
+			    <version>${lombok.version}</version>
+			</dependency>
+			
+			<dependency>
+	      		<groupId>com.fasterxml.jackson.core</groupId>
+	      		<artifactId>jackson-databind</artifactId>
+	      		<version>${jackson.databind.version}</version>
+	    	</dependency>
+	    	<dependency>
+	      		<groupId>com.fasterxml.jackson.core</groupId>
+	      		<artifactId>jackson-annotations</artifactId>
+	      		<version>2.8.7</version>
+	    	</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<finalName>wechatdemo</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>1.8</source>
+					<target>1.8</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
+
