@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
 * @author: xuqu
@@ -16,12 +17,12 @@ import org.springframework.context.annotation.Configuration;
 * 2017年7月25日 下午5:45:47
 * Description
 */
-
 @SpringBootApplication
 @EnableAutoConfiguration
 @Configuration
 @ServletComponentScan
 @MapperScan("com.himalaya.repository")
+@EnableTransactionManagement(proxyTargetClass=true)
 public class Application {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);

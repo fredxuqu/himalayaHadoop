@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.himalaya.domain.TaskCondition;
-import com.himalaya.domain.TaskDO;
+import com.himalaya.entity.CheckTask;
+import com.himalaya.entity.CheckTaskQueryParam;
 import com.himalaya.service.CheckTaskService;
 
 /**
@@ -42,11 +42,11 @@ public class CheckTaskController {
 				method = RequestMethod.GET, 
 				produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String searchNews(@RequestBody TaskCondition condition) {
+	public String searchNews(@RequestBody CheckTaskQueryParam condition) {
 
 		logger.info("List All Records!");
 
-		List<TaskDO> taskList = null;
+		List<CheckTask> taskList = null;
 		
 		JSONArray resultJSON = null;
 

@@ -2,8 +2,8 @@ package com.himalaya.service;
 
 import java.util.List;
 
-import com.himalaya.domain.TaskCondition;
-import com.himalaya.domain.TaskDO;
+import com.himalaya.entity.CheckTask;
+import com.himalaya.entity.CheckTaskQueryParam;
 
 /**
 * @author: xuqu
@@ -14,8 +14,8 @@ import com.himalaya.domain.TaskDO;
 */
 public interface CheckTaskService {
 
-	public void add(TaskDO task);
+	public void add(CheckTask checkTask);
 	public void delete(long taskId);
-	public void update(TaskDO task);
-	public List<TaskDO> list(TaskCondition condition);
+	public void update(CheckTask task);
+	public List<CheckTask> list(CheckTaskQueryParam queryParam);
 }

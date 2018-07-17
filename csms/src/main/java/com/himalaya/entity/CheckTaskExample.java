@@ -1,17 +1,16 @@
-package com.himalaya.domain;
+package com.himalaya.entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskDOExample {
-	
+public class CheckTaskExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public TaskDOExample() {
+    public CheckTaskExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -165,73 +164,73 @@ public class TaskDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andTasknameIsNull() {
-            addCriterion("taskName is null");
+        public Criteria andTaskNameIsNull() {
+            addCriterion("task_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameIsNotNull() {
-            addCriterion("taskName is not null");
+        public Criteria andTaskNameIsNotNull() {
+            addCriterion("task_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameEqualTo(String value) {
-            addCriterion("taskName =", value, "taskname");
+        public Criteria andTaskNameEqualTo(String value) {
+            addCriterion("task_name =", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameNotEqualTo(String value) {
-            addCriterion("taskName <>", value, "taskname");
+        public Criteria andTaskNameNotEqualTo(String value) {
+            addCriterion("task_name <>", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameGreaterThan(String value) {
-            addCriterion("taskName >", value, "taskname");
+        public Criteria andTaskNameGreaterThan(String value) {
+            addCriterion("task_name >", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameGreaterThanOrEqualTo(String value) {
-            addCriterion("taskName >=", value, "taskname");
+        public Criteria andTaskNameGreaterThanOrEqualTo(String value) {
+            addCriterion("task_name >=", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameLessThan(String value) {
-            addCriterion("taskName <", value, "taskname");
+        public Criteria andTaskNameLessThan(String value) {
+            addCriterion("task_name <", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameLessThanOrEqualTo(String value) {
-            addCriterion("taskName <=", value, "taskname");
+        public Criteria andTaskNameLessThanOrEqualTo(String value) {
+            addCriterion("task_name <=", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameLike(String value) {
-            addCriterion("taskName like", value, "taskname");
+        public Criteria andTaskNameLike(String value) {
+            addCriterion("task_name like", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameNotLike(String value) {
-            addCriterion("taskName not like", value, "taskname");
+        public Criteria andTaskNameNotLike(String value) {
+            addCriterion("task_name not like", value, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameIn(List<String> values) {
-            addCriterion("taskName in", values, "taskname");
+        public Criteria andTaskNameIn(List<String> values) {
+            addCriterion("task_name in", values, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameNotIn(List<String> values) {
-            addCriterion("taskName not in", values, "taskname");
+        public Criteria andTaskNameNotIn(List<String> values) {
+            addCriterion("task_name not in", values, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameBetween(String value1, String value2) {
-            addCriterion("taskName between", value1, value2, "taskname");
+        public Criteria andTaskNameBetween(String value1, String value2) {
+            addCriterion("task_name between", value1, value2, "taskName");
             return (Criteria) this;
         }
 
-        public Criteria andTasknameNotBetween(String value1, String value2) {
-            addCriterion("taskName not between", value1, value2, "taskname");
+        public Criteria andTaskNameNotBetween(String value1, String value2) {
+            addCriterion("task_name not between", value1, value2, "taskName");
             return (Criteria) this;
         }
 
@@ -505,63 +504,63 @@ public class TaskDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidIsNull() {
-            addCriterion("checklistid is null");
+        public Criteria andCheckListIdIsNull() {
+            addCriterion("check_list_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidIsNotNull() {
-            addCriterion("checklistid is not null");
+        public Criteria andCheckListIdIsNotNull() {
+            addCriterion("check_list_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidEqualTo(Long value) {
-            addCriterion("checklistid =", value, "checklistid");
+        public Criteria andCheckListIdEqualTo(Long value) {
+            addCriterion("check_list_id =", value, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidNotEqualTo(Long value) {
-            addCriterion("checklistid <>", value, "checklistid");
+        public Criteria andCheckListIdNotEqualTo(Long value) {
+            addCriterion("check_list_id <>", value, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidGreaterThan(Long value) {
-            addCriterion("checklistid >", value, "checklistid");
+        public Criteria andCheckListIdGreaterThan(Long value) {
+            addCriterion("check_list_id >", value, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidGreaterThanOrEqualTo(Long value) {
-            addCriterion("checklistid >=", value, "checklistid");
+        public Criteria andCheckListIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("check_list_id >=", value, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidLessThan(Long value) {
-            addCriterion("checklistid <", value, "checklistid");
+        public Criteria andCheckListIdLessThan(Long value) {
+            addCriterion("check_list_id <", value, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidLessThanOrEqualTo(Long value) {
-            addCriterion("checklistid <=", value, "checklistid");
+        public Criteria andCheckListIdLessThanOrEqualTo(Long value) {
+            addCriterion("check_list_id <=", value, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidIn(List<Long> values) {
-            addCriterion("checklistid in", values, "checklistid");
+        public Criteria andCheckListIdIn(List<Long> values) {
+            addCriterion("check_list_id in", values, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidNotIn(List<Long> values) {
-            addCriterion("checklistid not in", values, "checklistid");
+        public Criteria andCheckListIdNotIn(List<Long> values) {
+            addCriterion("check_list_id not in", values, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidBetween(Long value1, Long value2) {
-            addCriterion("checklistid between", value1, value2, "checklistid");
+        public Criteria andCheckListIdBetween(Long value1, Long value2) {
+            addCriterion("check_list_id between", value1, value2, "checkListId");
             return (Criteria) this;
         }
 
-        public Criteria andChecklistidNotBetween(Long value1, Long value2) {
-            addCriterion("checklistid not between", value1, value2, "checklistid");
+        public Criteria andCheckListIdNotBetween(Long value1, Long value2) {
+            addCriterion("check_list_id not between", value1, value2, "checkListId");
             return (Criteria) this;
         }
     }

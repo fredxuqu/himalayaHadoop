@@ -1,10 +1,10 @@
-package com.himalaya.domain;
+package com.himalaya.entity;
 
-public class TaskDO {
+public class CheckTask {
 	
     private Long id;
 
-    private String taskname;
+    private String taskName;
 
     private String description;
 
@@ -14,7 +14,7 @@ public class TaskDO {
 
     private String executor;
 
-    private Long checklistid;
+    private Long checkListId;
 
     private String pictures;
 
@@ -26,12 +26,12 @@ public class TaskDO {
         this.id = id;
     }
 
-    public String getTaskname() {
-        return taskname;
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTaskname(String taskname) {
-        this.taskname = taskname == null ? null : taskname.trim();
+    public void setTaskName(String taskName) {
+        this.taskName = taskName == null ? null : taskName.trim();
     }
 
     public String getDescription() {
@@ -66,12 +66,12 @@ public class TaskDO {
         this.executor = executor == null ? null : executor.trim();
     }
 
-    public Long getChecklistid() {
-        return checklistid;
+    public Long getCheckListId() {
+        return checkListId;
     }
 
-    public void setChecklistid(Long checklistid) {
-        this.checklistid = checklistid;
+    public void setCheckListId(Long checkListId) {
+        this.checkListId = checkListId;
     }
 
     public String getPictures() {
