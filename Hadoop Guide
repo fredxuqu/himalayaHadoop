@@ -1,0 +1,191 @@
+1. Principle
+	Map-Reduce
+	Map
+	Reduce
+	Shuffling
+	
+	Process of Whole handling
+	Input 					Splitting			Mapping				Shuffling				Reduce				FinalResult
+												Deer 1				Bear 1					
+						Deer Bear River			Bear 1				Bear 1					Bear 2
+	Deer Bear River								River 1				Car 1
+	Car Car River								Car 1				Car 1					Car 3				Bear 2
+	Deer Car Bear		Car Car Bear			Car 1				Car 1										Car 3
+												River 1				Deer 1					Deer 2				Deer 2		
+												Deer 1				Deer 1										River 2	
+						Deer Car River			Car 1				River 1					River 2
+												River 1				River 1
+
+2. Architecture
+	NameNode
+	Zookeeper
+	JournalNode
+	DataNode
+	FailoverController
+	
+	HA architecture principle
+	
+
+3. Install 2.x
+	
+	节点名称	NN1	 				NN2	 			DN	 		RM	 				NM
+	node1	NameNode  	 		DataNode	 									NodeManager
+	node2	SecondaryNameNode	DataNode					ResourceManager		NodeManager
+	node3	 	 				DataNode	 									NodeManager
+
+	1. download hadoop from 
+		http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.7.6/hadoop-2.7.6.tar.gz
+		
+	2. unzip hadoop*.tar.gz to /opt/hadoop
+	
+	3. config Login without authentication
+		a. generate private key and public key by
+			ssh-keygen -t rsa 
+		b. copy public key to remote server by 
+			ssh-copy-id -i ~/.ssh/id_rsa.pub fred@192.168.179.132
+			
+	4. config zookeeper server
+					
+	5. Config HDFS High Availability Using the Quorum Journal Manager
+		a. hdfs_site.xml
+			<property>
+			  <name>dfs.nameservices</name>
+			  <value>himalaya</value>
+			</property>			
+			<property>
+			  <name>dfs.ha.namenodes.himalaya</name>
+			  <value>nn1,nn2</value>
+			</property>			
+			<property>
+			  <name>dfs.namenode.rpc-address.himalaya.nn1</name>
+			  <value>node1:8020</value>
+			</property>
+			<property>
+			  <name>dfs.namenode.rpc-address.himalaya.nn2</name>
+			  <value>node2:8020</value>
+			</property>			
+			<property>
+			  <name>dfs.namenode.http-address.himalaya.nn1</name>
+			  <value>node1:50070</value>
+			</property>
+			<property>
+			  <name>dfs.namenode.http-address.himalaya.nn2</name>
+			  <value>node2:50070</value>
+			</property>			
+			<property>
+			  <name>dfs.namenode.shared.edits.dir</name>
+			  <value>qjournal://node1:8485;node2:8485;node3:8485/himalaya</value>
+			</property>			
+			<property>
+			  <name>dfs.client.failover.proxy.provider.himalaya</name>
+			  <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+			</property>			
+			<property>
+			  <name>dfs.ha.fencing.methods</name>
+			  <value>sshfence</value>
+			</property>			
+			<property>
+			  <name>dfs.ha.fencing.ssh.private-key-files</name>
+			  <value>/home/fred/.ssh/id_rsa</value>
+			</property>			
+			<property>
+			  <name>dfs.journalnode.edits.dir</name>
+			  <value>/home/fred/hadoop/jn/data</value>
+			</property>			
+			<property>
+			  <name>dfs.ha.automatic-failover.enabled</name>
+			  <value>true</value>
+			</property>
+		
+		b. core-site.xml
+			<property>
+			  <name>fs.defaultFS</name>
+			  <value>hdfs://himalaya</value>
+			</property>			
+			<property>
+			  <name>ha.zookeeper.quorum</name>
+			  <value>node1:2181,node2:2181,node3:2181</value>
+			</property>			
+			<property>
+			  <name>hadoop.tmp.dir</name>
+			  <value>/home/fred/hadoop/tmp</value>
+			</property>
+			
+		c. config slaves
+			node1
+			node2
+			node3
+			
+		d.	if os is ubuntu, change /etc/hosts, comment 127.0.1.1
+	
+	5. start up all server	
+		a.  start zookeeper
+			zkServer.sh start
+		
+		b. 	start hadoop server as journalnode, execute below command on each machine
+			hadoop/sbin/hadoop-daemon.sh start journalnode
+		
+		c. 	format a namenode
+			hadoop/bin/hdfs namenode -format
+			attention : Please delete all files under hadoop.tmp.dir, /tmp and zookeeper/data/version-2
+		
+			original file will be found under tmp/dfs/name/current
+			
+		d.	start a namenode which is formatted.
+			sbin/hadoop-daemon.sh start namenode
+		
+		e.	then execute below command on unformatted namenode server to format namenode
+			bin/hdfs namenode -bootstrapStandby
+			check tmp/dfs/name/current
+			
+			start current namenode server
+			sbin/hadoop-daemon.sh start namenode
+		
+		f. 	format zkfc
+			hadoop/bin/hdfs zkfc -formatZK
+		
+		e.	stop all hadoop service
+			hadoop/sbin/stop-dfs.sh
+		
+			if system can't find JAVA_HOME, identify JAVA_HOME in hadoop-env.sh 
+		
+		f.	start up all service
+			hadoop/sbin/start-dfs.sh
+			
+	6. create hdfs folder and upload file
+		./hdfs dfs -mkdir -p /usr/test
+		
+		./hdfs dfs -put /file /usr/test
+		
+		
+	7.	config mapreduce
+		mapred-site.xml		
+		<property>
+			<name>mapreduce.framework.name</name>
+			<value>yarn</value>
+		</property>
+		
+		yarn-site.xml
+		<property>
+			<name>yarn.nodemanager.hostname</name>
+			<value>node1</value>
+		</property>
+		<property>
+			<name>yarn.nodemanager.aux-services</name>
+			<value>mapreduce_shuffle</value>
+		</property>
+		<property>
+			<name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+			<value>org.apache.hadoop.mapred.ShuffleHandler</value>
+		</property>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
