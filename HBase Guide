@@ -1,0 +1,59 @@
+1. HBase体系结构
+	Client：包含访问Hbase的接口并维护cache来加快HBase的访问
+	
+	Zookeeper
+		保证任何时候，集群中只有一台Master
+		存储所有Region的寻址入口
+		实时监控Region Server的上线和下线信息，并实时通知Master
+		存储Hbase的schema和table meta data
+			
+	Master
+		为Region Server 分配 Region
+		负责Region Server的负载均衡
+		发现失效的Region Server，并重新分配其上的Region
+		管理用户对table的增删改操作
+		
+	RegionServer
+		Region Server 维护 Region， 处理对这些Region的IO 请求
+		Region Server负责切分在运行过程中变得过大的Region
+	
+
+2. 读数据的流程
+
+3. 写数据的流程
+
+4. APIS
+	HBaseAdmin(Admin)	
+		HTableDescriptor	
+		HColumnDescriptor	
+	
+	Table	
+		Put	
+		Delete	
+		Get	
+	
+	Scan	
+	ResultScanner	
+	Result	
+	Cell	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
