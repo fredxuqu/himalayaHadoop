@@ -12,9 +12,12 @@
 
 	<modules>
 		<module>mapreduce</module>
+		<module>wordcounter</module>
 	</modules>
 
 	<properties>
+		<junit.version>4.12</junit.version>
+		
 		<spring.boot.version>1.4.5.RELEASE</spring.boot.version>
 		<mybatis.spring.boot.starter>1.2.1</mybatis.spring.boot.starter>
 		<druid.spring.boot.starter>1.1.0</druid.spring.boot.starter>
@@ -56,6 +59,15 @@
 				<scope>system</scope>
 				<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
 			</dependency>
+			
+			<!-- junit for testing -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
 			
 			<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 			<dependency>

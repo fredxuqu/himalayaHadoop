@@ -1,0 +1,4 @@
+Map input records
+Map output records
+Map output bytes
+Map output materialized bytes

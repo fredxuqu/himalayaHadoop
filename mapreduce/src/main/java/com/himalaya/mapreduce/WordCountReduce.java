@@ -19,11 +19,14 @@ public class WordCountReduce extends Reducer<Text, IntWritable, Text, IntWritabl
 	protected void reduce(Text key, Iterable<IntWritable> values, Context context)
 			throws IOException, InterruptedException {
 		
+		// 统计单词个数
 		int sum = 0;
+		
 		for (IntWritable value : values) {
 			sum = sum + value.get();
 		}
 		
+		// 输出单词总个数
 		context.write(key, new IntWritable(sum));
 	}
 }

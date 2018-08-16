@@ -131,6 +131,8 @@ Hadoop的环境搭建
 		9. 查看运行结果
 			bin/hdfs dfs -cat /usr/fred/wcoutput/p*
 			
+		注意：修改临时目录的时候，需要将hadoop相关的进程全部杀掉，将tmp目录和logs目录内容全部都删除掉，然后再格式化namenode，启动。
+			
 	伪分布式部署（YARN）
 		mapred-site.xml
 			<property>
@@ -168,14 +170,200 @@ Hadoop的环境搭建
 		查看结果
 			bin/hdfs dfs -cat /usr/fred/output/p*
 			
-	完全分布式部署
-		3. config Login without authentication
+	配置历史服务器
+		修改 mapred-site.xml
+			<property>
+		        <name>mapreduce.jobhistory.address</name>
+		        <value>node100:10020</value>
+		    </property>
+		    <property>
+		        <name>mapreduce.jobhistory.webapp.address</name>
+		        <value>node100:19888</value>
+		    </property>
+		    
+		启动historyserver
+			sbin/mr-jobhistory-daemon.sh start historyserver
+			
+	集成日志聚集的功能
+		停止掉所有的hadoop进程
+		编辑 yarn-site.xml,增加如下配置
+			<property>
+		        <name>yarn.log-aggregation-enable</name>
+		        <value>true</value>
+		    </property>
+		
+		    <property>
+		        <name>yarn.log-aggregation.retain-seconds</name>
+		        <value>604800</value>
+		    </property>
+			
+			
+	完全分布式部署（非HA）
+		1. 配置虚拟机
+			hosts、主机名称、静态IP地址
+		2. 克隆三台虚拟机
+		3. 拷贝文件配置
+			scp
+				scp original/filename.tar.gz remoteUser@remoteIP:/target
+			rsync
+				rsync -rvl original/filename.tar.gz remoteUser@remoteIP:/target
+				
+		4. 配置ssh免密登陆
 			a. generate private key and public key by
 				ssh-keygen -t rsa 
 			b. copy public key to remote server by 
-				ssh-copy-id -i ~/.ssh/id_rsa.pub fred@192.168.179.102
+				ssh-copy-id -i ~/.ssh/id_rsa.pub fred@node101
+			xcall
+				ssh fred@remoteIP command
+		
+		5. 集群规划
+					node101				node102				node103
+			
+			HDFS	NameNode			DataNode			SecondNameNode
+					DataNode								DataNode
+					
+			YARN	NodeManager			NodeManager			NodeManager
+										ResourceManager		
+										
+		6. 配置文件
+			core-site.xml
+				<property>
+			        <name>fs.defaultFS</name>
+			        <value>hdfs://node102:9000</value>
+			    </property>
+			    <property>
+			        <name>hadoop.tmp.dir</name>
+			        <value>/opt/workspaces/hadoop/data/tmp</value>
+			    </property>			
 				
-		4. config zookeeper server
+			hadoop-env.sh
+				config java home
+				
+			hdfs-site.xml
+				<property>
+			        <name>dfs.replication</name>
+			        <value>3</value>
+			    </property>
+			    <property>
+			        <name>dfs.namenode.secondary.http-address</name>
+			        <value>node103:50090</value>
+			    </property>
+				
+			slaves
+				node101
+				node102
+				node103
+											
+			yarn-env.sh
+				config javahome
+				
+			yarn-site.xml
+				<property>
+			        <name>yarn.nodemanager.aux-services</name>
+			        <value>mapreduce_shuffle</value>
+			    </property>
+			
+			    <property>
+			        <name>yarn.resourcemanager.hostname</name>
+			        <value>node102</value>
+			    </property>
+			    
+			mapred-env.sh
+				
+			mapred-site.xml
+				<property>
+			        <name>mapreduce.framework.name</name>
+			        <value>yarn</value>
+			    </property>
+		7. 格式化namenode（必须在namenode上启动集群）
+			bin/hdfs namenode format
+			
+		8. 启动服务
+			在node101 上面执行 sbin/start-dfs.sh 
+			在node102 上面执行 sbin/start-yarn.sh
+			
+		9. 验证
+			hadoop fs -mkdir -p /usr/fred/input
+			hadoop fs -put wcinput/wc.input /usr/fred/input
+				上传的文件放到了 data/tmp/dfs/data/current/BP-1463701452-192.168.179.101-1533539433792/current 目录下面，
+			如果一个文件被切分成了多个，可以使用cat命令将多个block压缩到一个文件中，然后解压，得到原始文件。
+			hadoop fs -lsr
+			
+			http://node101:50070/explorer.html#/usr/fred/input
+		
+		10. 集群时间同步
+			安装ntp，采用默认配置
+		
+		
+	编译Hadoop
+		1. 下载如下包
+			ant
+			maven
+			hadoop源码
+			protobuf
+		
+		2. 解压，配置环境变量
+		
+		3. 安装g++ 和 glibc-headers 根据操作系统不同，使用不同的版本，使用apt-get系统会自动选择。
+			sudo apt-get install build-essential
+			gcc --version
+			
+			//使用了build-essential之后，可以不用再装g++了。
+			sudo apt-get install g++-4.4
+			g++ --version
+			
+		4. 安装make和cmake
+			sudo apt-get update
+			sudo apt-get install ubuntu-make
+			umake --help
+			
+		5. cd /opt/workspaces/protobuf
+			make
+			make check
+			make install
+			idconfig
+			
+			vi /etc/profile
+		
+		6. 安装openssl
+			sudo apt install cmake
+			sudo apt-get install openssl 
+			sudo apt-get install libssl-dev
+			sudo apt-get install zlib		
+			sudo apt-get install libncurses5-dev
+			
+		8. 解压源码
+			tar -xvf hadoop-2.7.6-src.tar.gz -C /opt/workspaces/
+			
+		9. 编译
+			为什么要编译？
+				原因在与Hadoop是java写的，但是有很多辅助功能是java之外的一些native方法提供的，这些功能具有平台相关性，根据不同的系统重新编译会减少不必要的错误。
+			
+			mvn package -Pdist,native -DskipTests -Dtar				//--不生成文档
+			mvn package -Pdist,native,docs,src -DskipTests -Dtar 	//生成文档，需要安装findbugs，并设置FINDBUGS_HOME环境变量
+			
+			常见错误及解决
+			[ERROR]  around Ant part ...<exec dir="/usr/local/hadoop-2.7.1-src/hadoop-common-project/hadoop-common/target/native" executable="cmake" failonerror="true">... @ 4:151 in /usr/local/hadoop-2.7.1-src/hadoop-common-project/hadoop-common/target/antrun/build-main.xml
+	 		解决：
+			yum install cmake
+			 
+			[ERROR] around Ant part ...<exec dir="/usr/local/hadoop-2.7.1-src/hadoop-tools/hadoop-pipes/target/native" executable="cmake" failonerror="true">... @ 5:131 in /usr/local/hadoop-2.7.1-src/hadoop-tools/hadoop-pipes/target/antrun/build-main.xml
+			解决
+			yum install openssl-devel
+					 
+			[ERROR] around Ant part ...<exec dir="/usr/local/hadoop-2.7.1-src/hadoop-common-project/hadoop-common/target/native" executable="cmake" failonerror="true">... @ 4:141 in /usr/local/hadoop-2.7.1-src/hadoop-common-project/hadoop-common/target/antrun/build-main.xml
+			解决：
+			yum -y install zlib-devel
+			yum -y install ncurses-devel
+			
+			
+	
+				
+			
+			
+			
+									
+		5. config zookeeper server
 						
 		5. Config HDFS High Availability Using the Quorum Journal Manager
 			a. hdfs_site.xml

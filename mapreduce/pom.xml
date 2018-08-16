@@ -101,7 +101,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.himalaya.Application</mainClass>
+					<mainClass>com.himalaya.mapreduce.MapReduceJob</mainClass>
 				</configuration>
 				<executions>
 					<execution>

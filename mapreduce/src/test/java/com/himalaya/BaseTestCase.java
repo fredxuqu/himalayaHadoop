@@ -1,12 +1,8 @@
 package com.himalaya;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * @author: xuqu
@@ -18,9 +14,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
  * 	1.4之前的配置是@RunWith(SpringJUnit4ClassRunner.class)
  * 				@SpringApplicationConfiguration(classes = SpringJUnitTestApplication.class)  
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
-@WebAppConfiguration
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = Application.class)
+//@WebAppConfiguration
 public class BaseTestCase {
 
 	protected static final Logger LOGGER = LoggerFactory.getLogger(BaseTestCase.class);
